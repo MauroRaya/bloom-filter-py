@@ -4,7 +4,16 @@ from BloomFilter import BloomFilter
 
 class TestBloomFilter(unittest.TestCase):
     def setUp(self):
-        self.bloom_filter = BloomFilter()
+        bitset_length = 10
+
+        self.bloom_filter = BloomFilter(
+            bitset_length,
+            hash_functions=[
+                lambda x : x % bitset_length,
+                lambda x : (2 * x) % bitset_length,
+                lambda x : (x * x) % bitset_length,
+            ]
+        )
 
     def test_insert_10_contains_10_probably_yes(self):
         self.bloom_filter.insert(10)

@@ -1,13 +1,14 @@
 from BloomFilterReturn import BloomFilterReturn
+from typing import Callable
 
 class BloomFilter():
-    def __init__(self):
-        self.bitset = [0 for _ in range(10)]
-        self.hash_functions = [
-            lambda x : x % len(self.bitset),
-            lambda x : (2 * x) % len(self.bitset),
-            lambda x : (x * x) % len(self.bitset),
-        ]
+    def __init__(
+        self,
+        bitset_length: int,
+        hash_functions: list[Callable[[int], int]]
+    ):
+        self.bitset = [0] * bitset_length
+        self.hash_functions = hash_functions
 
     def insert(self, value: int):
         for hash_function in self.hash_functions:
